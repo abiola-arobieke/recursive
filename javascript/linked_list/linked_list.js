@@ -63,13 +63,30 @@ class LinkedList {
 
     return this.removeDuplicate((current = current.next), saved_data);
   }
+
+  delAllKey(data, current = this.head) {
+    if (current.next == null) {
+      if (current.data == data) {
+        current.data = null;
+      }
+      return this;
+    }
+
+    if (current.data == data) {
+      current.data = current.next.data;
+      current.next = current.next.next;
+      return this.delAllKey(data, current);
+    }
+
+    return this.delAllKey(data, (current = current.next));
+  }
 }
 
 num = new LinkedList();
 
-num.add(4);
 num.add(1);
-num.add(1);
+num.add(2);
+num.add(3);
 num.add(4);
 num.add(1);
 num.add(1);
@@ -84,12 +101,16 @@ num.add(5);
 num.add(2);
 num.add(1);
 num.add(2);
-num.add(5);
+num.add(2);
 
 // console.log(num.exist(5))
 
 // console.log(num)
 
-console.log(num.removeDuplicate());
+// console.log(num.removeDuplicate());
+
+num.delAllKey(2);
+num.delAllKey(1);
+num.delAllKey(4);
 
 num.list();
